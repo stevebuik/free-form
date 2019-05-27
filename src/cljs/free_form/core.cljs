@@ -24,10 +24,11 @@
       (.-value target))))
 
 (defn- extract-event-value [event]
-  (if (or (boolean? event)
-          (string? event))
-    event                                                                                                               ; React-toolbox generates events that already contain a stracted string of the value as the first paramenter
-    (js-event-value event)))                                                                                            ; for all other cases, we extract it ourselves.
+  (cond
+    (nil? event) nil
+    (or (boolean? event)
+        (string? event)) event                              ; React-toolbox generates events that already contain a stracted string of the value as the first paramenter
+    :else (js-event-value event)))                          ; for all other cases, we extract it ourselves.
 
 (defn- first-non-nil [& coll]
   (first (filter (complement nil?) coll)))
