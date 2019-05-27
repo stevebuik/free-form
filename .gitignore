@@ -19,3 +19,6 @@ pom.xml.asc
 .idea/replstate.xml
 *.ipr
 *.iws
+/free-form.iml
+/.idea/modules.xml
+/.idea/misc.xml
