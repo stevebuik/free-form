@@ -19,9 +19,10 @@
 
 (defn- js-event-value [event]
   (let [target (.-target event)]
-    (case (.-type target)
-      "checkbox" (.-checked target)
-      (.-value target))))
+    (when target
+      (case (.-type target)
+        "checkbox" (.-checked target)
+        (.-value target)))))
 
 (defn- extract-event-value [event]
   (cond
