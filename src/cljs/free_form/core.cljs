@@ -19,7 +19,8 @@
 
 (defn- js-event-value [event]
   (let [target (.-target event)]
-    (when target
+    (if (nil? target)
+      (.-value event)                                       ; allow events to provide values from non UI elements
       (case (.-type target)
         "checkbox" (.-checked target)
         (.-value target)))))
@@ -39,7 +40,8 @@
     node
     (let [[attributes free-form-attributes keys] (extract-attributes node :free-form/input)
           {:keys [value-on error-on extra-error-keys]} free-form-attributes
-          on-change-fn #(on-change keys (extract-event-value %1))
+          on-change-fn (fn [event]
+                         (on-change keys (extract-event-value event)))
           value-on     (or value-on (case (:type attributes)
                                       (:checkbox :radio) :default-checked
                                       :value))
