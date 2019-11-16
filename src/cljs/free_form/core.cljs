@@ -28,6 +28,7 @@
 (defn- extract-event-value [event]
   (cond
     (nil? event) nil
+    (seqable? event) (map js-event-value event)             ; handle N values from multi-value inputs
     (or (boolean? event)
         (string? event)) event                              ; React-toolbox generates events that already contain a stracted string of the value as the first paramenter
     :else (js-event-value event)))                          ; for all other cases, we extract it ourselves.
